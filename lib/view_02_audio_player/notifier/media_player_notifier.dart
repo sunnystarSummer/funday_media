@@ -99,24 +99,42 @@ class MediaPlayerNotifier extends AsyncNotifier<MediaPlayerValue> {
       state = AsyncError(e, st);
     }
   }
-}
 
-/// 切換播放 / 暫停指定音檔的操作
-///
-/// 若目前播放的音檔與 [audio] 相同：
-/// - 若正在播放 → 暫停
-/// - 若暫停中 → 播放
-/// 若不同音檔，則不做任何動作（可擴充成自動切換新音檔）
-Future<void> audioPlayerAction(WidgetRef ref, TravelAudio audio) async {
-  MediaPlayerNotifier notifier = ref.read(mediaPlayerProvider.notifier);
+  /// 切換播放 / 暫停指定音檔的操作
+  ///
+  /// 若目前播放的音檔與 [audio] 相同：
+  /// - 若正在播放 → 暫停
+  /// - 若暫停中 → 播放
+  /// 若不同音檔，則不做任何動作（可擴充成自動切換新音檔）
+  Future<void> audioPlayerAction(TravelAudio audio) async {
+    final id = _playerState.travelAudio?.id;
 
-  final id = _playerState.travelAudio?.id;
-
-  if (id == audio.id) {
-    if (_playerState.isPlaying) {
-      await notifier.pause();
-    } else {
-      await notifier.play();
+    if (id == audio.id) {
+      if (_playerState.isPlaying) {
+        await pause();
+      } else {
+        await play();
+      }
     }
   }
 }
+
+// /// 切換播放 / 暫停指定音檔的操作
+// ///
+// /// 若目前播放的音檔與 [audio] 相同：
+// /// - 若正在播放 → 暫停
+// /// - 若暫停中 → 播放
+// /// 若不同音檔，則不做任何動作（可擴充成自動切換新音檔）
+// Future<void> audioPlayerAction(WidgetRef ref, TravelAudio audio) async {
+//   MediaPlayerNotifier notifier = ref.read(mediaPlayerProvider.notifier);
+//
+//   final id = _playerState.travelAudio?.id;
+//
+//   if (id == audio.id) {
+//     if (_playerState.isPlaying) {
+//       await notifier.pause();
+//     } else {
+//       await notifier.play();
+//     }
+//   }
+// }

@@ -22,6 +22,9 @@ class TravelAudioItemView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    MediaPlayerNotifier mediaPlayerNotifier = ref.read(
+      mediaPlayerProvider.notifier,
+    );
     AsyncValue<MediaPlayerValue> mediaPlayerValueByAsync = ref.watch(
       mediaPlayerProvider,
     );
@@ -82,7 +85,8 @@ class TravelAudioItemView extends ConsumerWidget {
           if (isPlaying == true)
             TextButton.icon(
               icon: Icon(Icons.pause),
-              onPressed: () async => await audioPlayerAction(ref, playingAudio),
+              onPressed: () async =>
+                  await mediaPlayerNotifier.audioPlayerAction(playingAudio),
               label: Text('暫停'),
               style: TextButton.styleFrom(
                 padding: EdgeInsets.zero, // 移除額外 padding
@@ -93,7 +97,8 @@ class TravelAudioItemView extends ConsumerWidget {
           if (isPlaying == false)
             TextButton.icon(
               icon: Icon(Icons.play_arrow),
-              onPressed: () async => await audioPlayerAction(ref, playingAudio),
+              onPressed: () async =>
+                  await mediaPlayerNotifier.audioPlayerAction(playingAudio),
               label: Text('播放'),
               style: TextButton.styleFrom(
                 padding: EdgeInsets.zero, // 移除額外 padding
