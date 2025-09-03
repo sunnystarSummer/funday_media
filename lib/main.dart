@@ -2,7 +2,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:funday_media/main_mobile.dart';
 import 'package:funday_media/repository/data/travel_audio_list.dart';
 import 'package:funday_media/repository/main_repository.dart';
-import 'package:funday_media/repository/main_repository_mobile.dart' as mobile;
 import 'package:funday_media/ui/loading_view.dart';
 import 'package:funday_media/view_01_travel_audio_list_page/travel_audio_list_page.dart';
 import 'package:funday_media/view_02_audio_player/audio_player_page.dart';
@@ -23,9 +22,7 @@ Future<void> main() async {
   LoadingView.config();
 }
 
-AbsMainRepository mainRepository = isMobile
-    ? mobile.MainRepository.instance
-    : MainRepository.instance;
+AbsMainRepository repository = mainOfRepository;
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(

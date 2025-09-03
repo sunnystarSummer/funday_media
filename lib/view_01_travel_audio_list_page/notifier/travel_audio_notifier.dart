@@ -55,7 +55,7 @@ class TravelAudioNotifier extends AsyncNotifier<TravelAudioList> {
       try {
         final completer = Completer<TravelAudioList>();
 
-        await mainRepository.getTravelAudioOfMedia(
+        await repository.getTravelAudioOfMedia(
           page: enableLoadMore ? _page : page,
           success: (data) => completer.complete(data),
           error: (code, message) {
@@ -83,12 +83,10 @@ class TravelAudioNotifier extends AsyncNotifier<TravelAudioList> {
     final task = Completer<void>();
     _runningTask = task;
 
-    if (mainRepository.isValidOfTravelAudioOfMediaApi()) {
-      await fetchTravelAudioOfMedia(enableLoadMore: true, error: error).then((_) {
-        task.complete();
-        _runningTask = null;
-      });
-    }
+    await fetchTravelAudioOfMedia(enableLoadMore: true, error: error).then((_) {
+      task.complete();
+      _runningTask = null;
+    });
   }
 
   /// 下載指定索引的音檔 MP3，並更新狀態
@@ -106,16 +104,16 @@ class TravelAudioNotifier extends AsyncNotifier<TravelAudioList> {
       final oldAudio = await state.value!.list[index];
 
       // 呼叫 Repository 下載檔案
-      final filePath = await mainRepository.downloadFile(
+      final filePath = await repository.downloadFile(
         oldAudio,
         onReceiveProgress: onReceiveProgress,
       );
 
       // 將下載完成的檔案資訊寫入資料庫
-      await mainRepository.insertOrUpdateAudio(oldAudio, filePath: filePath);
+      await repository.insertOrUpdateAudio(oldAudio, filePath: filePath);
 
       // 重新建立清單（確保狀態更新）
-      TravelAudioList newTravelAudioList = mainRepository.newTravelAudioList(
+      TravelAudioList newTravelAudioList = repository.newTravelAudioList(
         state.value!.rawList,
         total: state.value!.total,
       );

@@ -6,7 +6,7 @@ import '../data_base/travel_audio_db.dart';
 
 part 'travel_audio_list.g.dart';
 
-get travelAudioEmptyList {
+TravelAudioList get travelAudioEmptyList {
   return TravelAudioList.empty(0);
 }
 
