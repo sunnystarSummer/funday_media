@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:funday_media/service/client/download_client.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../service/model/travel_audio.dart' as travelService;
+import '../service/model/travel_audio.dart' as travel_service;
 import 'data/travel_audio_list.dart';
 import 'data_base/travel_audio_db.dart';
 import 'main_repository.dart';
@@ -11,12 +11,12 @@ import 'main_repository.dart';
 ///
 /// 負責處理「旅遊音檔」的存取邏輯，
 /// 包含 API 請求、快取、資料庫存取與檔案下載。
-final class MainRepository extends AbsMainRepository {
+final class _MainRepository extends AbsMainRepository {
   /// 私有建構子，僅允許內部建立
-  MainRepository._();
+  _MainRepository._();
 
   /// 全域唯一實例（Singleton）
-  static MainRepository get instance => MainRepository._();
+  static final _MainRepository _instance = _MainRepository._();
 
   /// 資料庫操作物件
   final TravelAudioDatabase _db = TravelAudioDatabase.instance;
@@ -25,15 +25,15 @@ final class MainRepository extends AbsMainRepository {
   /// 建立新的旅遊音檔清單
   @override
   TravelAudioList newTravelAudioList(
-    List<travelService.TravelAudio> rawList, {
+      Map<int, List<travel_service.TravelAudio>> travelAudioMap, {
     required int total,
   }) {
-    return TravelAudioList(rawList, total: total, newTravelAudio: mapAudio);
+    return TravelAudioList(travelAudioMap, total: total, newTravelAudio: mapAudio);
   }
 
   /// 將 API 的 TravelAudio 轉換成 App 內部使用的 TravelAudio
   @override
-  Future<TravelAudio> mapAudio(travelService.TravelAudio audio) async {
+  Future<TravelAudio> mapAudio(travel_service.TravelAudio audio) async {
     final newTravelAudio = TravelAudio(
       audio.id,
       audio.title ?? '',
@@ -61,8 +61,6 @@ final class MainRepository extends AbsMainRepository {
       isModified: isModified,
       filePath: tableData?.filePath,
     );
-
-    return newTravelAudio;
   }
 
   //=========================================================================
@@ -115,3 +113,5 @@ final class MainRepository extends AbsMainRepository {
     return savePath;
   }
 }
+
+AbsMainRepository mainRepositoryForMobile() => _MainRepository._instance;

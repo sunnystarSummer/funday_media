@@ -16,7 +16,7 @@ void main() {
   test('A_MediaAudio', () async {
     var info = "A_影音刊物_語音導覽";
 
-    final response = await client.fetchDataByTravelClient(
+    await client.fetchDataByTravelClient(
       api: (url, languageCode, client) {
         info += "\n";
         info += "Url= $url\n";
@@ -33,8 +33,8 @@ void main() {
       error: (code, message) {
         // 此區塊可處理「失敗」結果
         info += "\n";
-        info += "ErrorCode= ${code}\n";
-        info += "ErrorMessage= ${message}\n";
+        info += "ErrorCode= $code\n";
+        info += "ErrorMessage= $message\n";
       },
     );
     //expect(response?.data != null, true);

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../main.dart';
-import '../main_mobile.dart';
 import '../repository/data/travel_audio_list.dart';
 
 import '../ui/dialog_view.dart';
@@ -20,13 +19,9 @@ class TravelAudioListPage extends ConsumerStatefulWidget {
       _TravelAudioListPageState();
 }
 
-//FIXME: RangeError (index)
 class _TravelAudioListPageState extends ConsumerState<TravelAudioListPage> {
   TravelAudioNotifier get _travelAudioNotifier =>
       ref.read(travelAudioProvider.notifier);
-
-  // AsyncValue<TravelAudioList> get _travelAudioState =>
-  //     ref.watch(travelAudioProvider);
 
   @override
   void initState() {
@@ -47,11 +42,6 @@ class _TravelAudioListPageState extends ConsumerState<TravelAudioListPage> {
       body: _listViewBuilderWithScrollNotification,
     );
   }
-
-  Widget get _body => Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: <Widget>[_listViewBuilderWithScrollNotification],
-  );
 
   Future<void> _fetchTravelAudioOfMediaWhenInitial() async {
     await _travelAudioNotifier.fetchTravelAudioOfMedia(
@@ -116,7 +106,7 @@ class _TravelAudioListPageState extends ConsumerState<TravelAudioListPage> {
           ? travelAudioList.list.length + 1
           : 0,
       itemBuilder: (context, index) {
-        // ✅ Handle the extra footer slot first
+
         if (index == travelAudioList.list.length) {
           if (isEnd) {
             return const SizedBox(
@@ -138,10 +128,8 @@ class _TravelAudioListPageState extends ConsumerState<TravelAudioListPage> {
           }
         }
 
-        // Safe: index < list.length
         final value = travelAudioList.list[index];
 
-        //FIXME: 刷新畫面，導致Item位置偏移
         return FutureBuilder<TravelAudio>(
           future: value,
           builder: (context, snapshot) {

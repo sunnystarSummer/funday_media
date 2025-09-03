@@ -27,7 +27,7 @@ class LoadingView {
 
   static Future<void> showProgress(int received, int total) async {
     if (received != total) {
-      final progressValue = "${(received / total * 100).toStringAsFixed(0)}%";
+      // final progressValue = "${(received / total * 100).toStringAsFixed(0)}%";
 
       await EasyLoading.showProgress(received / total);
     } else {

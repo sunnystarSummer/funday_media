@@ -7,11 +7,6 @@ final class DownloadClient {
     void Function(int, int)? onReceiveProgress,
   }) async {
     final dio = Dio();
-    //final url = "https://example.com/file.pdf";
-
-    // final dir = await getApplicationDocumentsDirectory();
-    // final savePath = "${dir.path}/file.pdf";
-
     await dio.download(url, savePath, onReceiveProgress: onReceiveProgress);
   }
 }

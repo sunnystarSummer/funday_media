@@ -26,7 +26,7 @@ class TravelAudioNotifier extends AsyncNotifier<TravelAudioList> {
   /// 初始狀態（空清單）
   @override
   FutureOr<TravelAudioList> build() async {
-    return travelAudioEmptyList;
+    return TravelAudioList.empty();
   }
 
   /// 是否正在下載檔案（避免重複觸發）
@@ -83,12 +83,10 @@ class TravelAudioNotifier extends AsyncNotifier<TravelAudioList> {
     final task = Completer<void>();
     _runningTask = task;
 
-    if (mainRepository.isValidOfTravelAudioOfMediaApi()) {
-      await fetchTravelAudioOfMedia(enableLoadMore: true, error: error).then((_) {
-        task.complete();
-        _runningTask = null;
-      });
-    }
+    await fetchTravelAudioOfMedia(enableLoadMore: true, error: error).then((_) {
+      task.complete();
+      _runningTask = null;
+    });
   }
 
   /// 下載指定索引的音檔 MP3，並更新狀態
@@ -116,7 +114,7 @@ class TravelAudioNotifier extends AsyncNotifier<TravelAudioList> {
 
       // 重新建立清單（確保狀態更新）
       TravelAudioList newTravelAudioList = mainRepository.newTravelAudioList(
-        state.value!.rawList,
+        state.value!.travelAudioMap,
         total: state.value!.total,
       );
 
