@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:funday_media/main_mobile.dart';
 import 'package:funday_media/repository/data/travel_audio_list.dart';
@@ -11,6 +12,10 @@ import 'package:go_router/go_router.dart';
 
 const appName = 'Travel Audio App';
 
+bool get isMobile =>
+    defaultTargetPlatform == TargetPlatform.android ||
+        defaultTargetPlatform == TargetPlatform.iOS;
+
 Future<void> main() async {
   if (isMobile) {
     mainOfMobile();
@@ -22,7 +27,7 @@ Future<void> main() async {
   LoadingView.config();
 }
 
-AbsMainRepository repository = mainOfRepository;
+AbsMainRepository mainRepository = mainOfRepository();
 
 final routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(

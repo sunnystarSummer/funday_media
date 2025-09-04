@@ -7,9 +7,8 @@ import 'data/travel_audio_list.dart';
 import 'main_repository_mobile.dart' as mobile;
 import 'main_repository_web.dart';
 
-AbsMainRepository mainOfRepository = isSupportDb
-    ? mobile.MainRepository.instance
-    : MainRepository.instance;
+AbsMainRepository mainOfRepository() =>
+    isSupportDb ? mobile.mainRepositoryForMobile() : mainRepositoryForWeb();
 
 /// 抽象類別：定義主要資料倉儲的介面
 ///

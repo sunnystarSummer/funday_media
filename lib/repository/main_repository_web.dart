@@ -6,11 +6,11 @@ import 'main_repository.dart';
 ///
 /// 負責處理「旅遊音檔」的存取邏輯，
 /// 包含 API 請求、快取、資料庫存取與檔案下載。
-final class MainRepository extends AbsMainRepository {
-  MainRepository._();
+final class _MainRepository extends AbsMainRepository {
+  _MainRepository._();
 
   /// 全域唯一實例（Singleton）
-  static MainRepository get instance => MainRepository._();
+  static final _MainRepository _instance = _MainRepository._();
 
   //=========================================================================
 
@@ -41,12 +41,20 @@ final class MainRepository extends AbsMainRepository {
   }
 
   @override
-  Future<String> downloadFile(TravelAudio audio, {required void Function(int received, int total) onReceiveProgress}) {
+  Future<String> downloadFile(
+    TravelAudio audio, {
+    required void Function(int received, int total) onReceiveProgress,
+  }) {
     throw UnimplementedError();
   }
 
   @override
-  Future<void> insertOrUpdateAudio(TravelAudio audio, {required String filePath}) {
+  Future<void> insertOrUpdateAudio(
+    TravelAudio audio, {
+    required String filePath,
+  }) {
     throw UnimplementedError();
   }
 }
+
+AbsMainRepository mainRepositoryForWeb() => _MainRepository._instance;

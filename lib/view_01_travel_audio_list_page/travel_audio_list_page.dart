@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../main.dart';
-import '../main_mobile.dart';
 import '../repository/data/travel_audio_list.dart';
 
 import '../ui/dialog_view.dart';
@@ -20,13 +19,9 @@ class TravelAudioListPage extends ConsumerStatefulWidget {
       _TravelAudioListPageState();
 }
 
-//FIXME: RangeError (index)
 class _TravelAudioListPageState extends ConsumerState<TravelAudioListPage> {
   TravelAudioNotifier get _travelAudioNotifier =>
       ref.read(travelAudioProvider.notifier);
-
-  // AsyncValue<TravelAudioList> get _travelAudioState =>
-  //     ref.watch(travelAudioProvider);
 
   @override
   void initState() {

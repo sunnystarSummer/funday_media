@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../main_mobile.dart';
+import '../main.dart';
 import '../view_02_audio_player/notifier/media_player_notifier.dart';
 import 'media/media_player_value.dart';
 

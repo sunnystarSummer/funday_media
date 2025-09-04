@@ -55,7 +55,7 @@ class TravelAudioNotifier extends AsyncNotifier<TravelAudioList> {
       try {
         final completer = Completer<TravelAudioList>();
 
-        await repository.getTravelAudioOfMedia(
+        await mainRepository.getTravelAudioOfMedia(
           page: enableLoadMore ? _page : page,
           success: (data) => completer.complete(data),
           error: (code, message) {
@@ -104,16 +104,16 @@ class TravelAudioNotifier extends AsyncNotifier<TravelAudioList> {
       final oldAudio = await state.value!.list[index];
 
       // 呼叫 Repository 下載檔案
-      final filePath = await repository.downloadFile(
+      final filePath = await mainRepository.downloadFile(
         oldAudio,
         onReceiveProgress: onReceiveProgress,
       );
 
       // 將下載完成的檔案資訊寫入資料庫
-      await repository.insertOrUpdateAudio(oldAudio, filePath: filePath);
+      await mainRepository.insertOrUpdateAudio(oldAudio, filePath: filePath);
 
       // 重新建立清單（確保狀態更新）
-      TravelAudioList newTravelAudioList = repository.newTravelAudioList(
+      TravelAudioList newTravelAudioList = mainRepository.newTravelAudioList(
         state.value!.rawList,
         total: state.value!.total,
       );
