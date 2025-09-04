@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class DialogView {
   DialogView._();
 
-  static showError(
+  static Future showError(
     BuildContext context, {
     required int code,
     required String message,

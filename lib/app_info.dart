@@ -1,4 +1,4 @@
-import 'package:funday_media/service/serverType.dart';
+import 'package:funday_media/service/server_type.dart';
 
 // Flutter 3.32.8 • channel stable • https://github.com/flutter/flutter.git
 // Framework • revision edada7c56e (5 weeks ago) • 2025-07-25 14:08:03 +0000

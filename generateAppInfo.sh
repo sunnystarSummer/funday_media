@@ -40,7 +40,7 @@ fi
 
 # 生成Class dart檔案
 cat << EOF > "$file_path/$file_name"
-import 'package:funday_media/service/serverType.dart';
+import 'package:funday_media/service/server_type.dart';
 
 $flutterVersionInfoWithChangeLine
 

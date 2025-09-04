@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:collection';
 
-import '../../service/model/travel_audio.dart' as travelService;
+import '../../service/model/travel_audio.dart' as travel_service;
 import '../data_base/travel_audio_db.dart';
 
 part 'travel_audio_list.g.dart';
@@ -11,7 +11,7 @@ TravelAudioList get travelAudioEmptyList {
 }
 
 class TravelAudioList {
-  final List<travelService.TravelAudio> rawList;
+  final List<travel_service.TravelAudio> rawList;
 
   final List<Future<TravelAudio>> _newList = [];
 
@@ -26,7 +26,7 @@ class TravelAudioList {
   TravelAudioList(
     this.rawList, {
     required this.total,
-    required Future<TravelAudio> Function(travelService.TravelAudio)
+    required Future<TravelAudio> Function(travel_service.TravelAudio)
     newTravelAudio,
   }) {
     for (final audio in rawList) {
@@ -44,7 +44,7 @@ extension ExTravelAudioList on TravelAudioList {
   TravelAudioList merge(
     TravelAudioList other, {
     required int page,
-    required Future<TravelAudio> Function(travelService.TravelAudio)
+    required Future<TravelAudio> Function(travel_service.TravelAudio)
     newTravelAudio,
   }) {
     return TravelAudioList(total: other.total, [
@@ -55,7 +55,7 @@ extension ExTravelAudioList on TravelAudioList {
 }
 
 @JsonSerializable(explicitToJson: true)
-class TravelAudio extends travelService.TravelAudio {
+class TravelAudio extends travel_service.TravelAudio {
   TravelAudio(
     super.id,
     String super.title,
@@ -80,7 +80,7 @@ class TravelAudio extends travelService.TravelAudio {
   Map<String, dynamic> toJson() => _$TravelAudioToJson(this);
 }
 
-extension ExTravelAudio on travelService.TravelAudio {
+extension ExTravelAudio on travel_service.TravelAudio {
   bool isUpdated(TravelAudioTableData tableData) {
     try {
       final a = DateTime.tryParse(tableData.modified ?? '');

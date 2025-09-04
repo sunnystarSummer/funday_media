@@ -1,4 +1,4 @@
-import '../service/model/travel_audio.dart' as travelService;
+import '../service/model/travel_audio.dart' as travel_service;
 import 'data/travel_audio_list.dart';
 import 'main_repository.dart';
 
@@ -17,7 +17,7 @@ final class _MainRepository extends AbsMainRepository {
   /// 建立新的旅遊音檔清單
   @override
   TravelAudioList newTravelAudioList(
-    List<travelService.TravelAudio> rawList, {
+    List<travel_service.TravelAudio> rawList, {
     required int total,
   }) {
     return TravelAudioList(rawList, total: total, newTravelAudio: mapAudio);
@@ -25,7 +25,7 @@ final class _MainRepository extends AbsMainRepository {
 
   /// 將 API 的 TravelAudio 轉換成 App 內部使用的 TravelAudio
   @override
-  Future<TravelAudio> mapAudio(travelService.TravelAudio audio) async {
+  Future<TravelAudio> mapAudio(travel_service.TravelAudio audio) async {
     final newTravelAudio = TravelAudio(
       audio.id,
       audio.title ?? '',

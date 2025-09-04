@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:funday_media/repository/data_base/travel_audio_db.dart';
 
 import '../service/client/travel_client.dart';
-import '../service/model/travel_audio.dart' as travelService;
+import '../service/model/travel_audio.dart' as travel_service;
 import 'data/travel_audio_list.dart';
 import 'main_repository_mobile.dart' as mobile;
 import 'main_repository_web.dart';
@@ -81,10 +81,10 @@ abstract class AbsMainRepository {
 
   /// 將 API 的 TravelAudio 轉換成 App 內部使用的 TravelAudio
   @protected
-  Future<TravelAudio> mapAudio(travelService.TravelAudio audio);
+  Future<TravelAudio> mapAudio(travel_service.TravelAudio audio);
 
   TravelAudioList newTravelAudioList(
-    List<travelService.TravelAudio> rawList, {
+    List<travel_service.TravelAudio> rawList, {
     required int total,
   });
 

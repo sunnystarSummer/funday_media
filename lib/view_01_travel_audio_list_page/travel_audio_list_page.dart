@@ -43,11 +43,6 @@ class _TravelAudioListPageState extends ConsumerState<TravelAudioListPage> {
     );
   }
 
-  Widget get _body => Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: <Widget>[_listViewBuilderWithScrollNotification],
-  );
-
   Future<void> _fetchTravelAudioOfMediaWhenInitial() async {
     await _travelAudioNotifier.fetchTravelAudioOfMedia(
       error: (code, message) =>

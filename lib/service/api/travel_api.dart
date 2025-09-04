@@ -4,7 +4,7 @@ import 'package:retrofit/http.dart';
 
 import '../model/base_response.dart';
 import '../model/travel_audio.dart';
-import '../serverType.dart';
+import '../server_type.dart';
 
 part 'travel_api.g.dart';
 

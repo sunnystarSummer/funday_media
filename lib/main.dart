@@ -34,11 +34,11 @@ final routerProvider = Provider<GoRouter>((ref) {
     routes: [
       GoRoute(
         path: '/',
-        builder: (_, __) => TravelAudioListPage(title: appName),
+        builder: (_, _) => TravelAudioListPage(title: appName),
       ),
       GoRoute(
         path: '/audio_player',
-        builder: (_, __) => AudioPlayerPage(title: appName),
+        builder: (_, _) => AudioPlayerPage(title: appName),
       ),
     ],
   );
@@ -49,11 +49,6 @@ Future<void> intoAudioPlayerPage(WidgetRef ref, TravelAudio audio) async {
 
   AsyncValue<MediaPlayerValue> valueByAsync = ref.watch(mediaPlayerProvider);
   final MediaPlayerValue value = valueByAsync.requireValue;
-
-  print('MediaPlayerValue: $value');
-
-  print('travelAudioId: ${value.travelAudio?.id}');
-  print('audioId: ${audio.id}');
 
   if (value.travelAudio?.id != audio.id) {
     await notifier.setTravelAudioMedia(audio);
