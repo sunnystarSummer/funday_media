@@ -14,7 +14,7 @@ const appName = 'Travel Audio App';
 
 bool get isMobile =>
     defaultTargetPlatform == TargetPlatform.android ||
-        defaultTargetPlatform == TargetPlatform.iOS;
+    defaultTargetPlatform == TargetPlatform.iOS;
 
 Future<void> main() async {
   if (isMobile) {
