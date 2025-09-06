@@ -51,7 +51,7 @@ abstract class AbsMainRepository {
 
           // 將 API 回傳資料轉換成 TravelAudioList
           final newList = newTravelAudioList(
-            response.data ?? [],
+            {page: response.data ?? []},
             total: response.total,
           );
 
@@ -63,7 +63,6 @@ abstract class AbsMainRepository {
           else {
             _travelAudioList = _travelAudioList.merge(
               newList,
-              page: page,
               newTravelAudio: mapAudio,
             );
           }
@@ -84,7 +83,7 @@ abstract class AbsMainRepository {
   Future<TravelAudio> mapAudio(travel_service.TravelAudio audio);
 
   TravelAudioList newTravelAudioList(
-    List<travel_service.TravelAudio> rawList, {
+    Map<int, List<travel_service.TravelAudio>> travelAudioMap, {
     required int total,
   });
 

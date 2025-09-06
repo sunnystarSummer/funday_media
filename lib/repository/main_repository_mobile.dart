@@ -25,10 +25,10 @@ final class _MainRepository extends AbsMainRepository {
   /// 建立新的旅遊音檔清單
   @override
   TravelAudioList newTravelAudioList(
-    List<travel_service.TravelAudio> rawList, {
+      Map<int, List<travel_service.TravelAudio>> travelAudioMap, {
     required int total,
   }) {
-    return TravelAudioList(rawList, total: total, newTravelAudio: mapAudio);
+    return TravelAudioList(travelAudioMap, total: total, newTravelAudio: mapAudio);
   }
 
   /// 將 API 的 TravelAudio 轉換成 App 內部使用的 TravelAudio

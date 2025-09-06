@@ -7,11 +7,12 @@ import '../data_base/travel_audio_db.dart';
 part 'travel_audio_list.g.dart';
 
 TravelAudioList get travelAudioEmptyList {
-  return TravelAudioList.empty(0);
+  return TravelAudioList.empty();
 }
 
 class TravelAudioList {
-  final List<travel_service.TravelAudio> rawList;
+
+  final Map<int, List<travel_service.TravelAudio>> travelAudioMap;
 
   final List<Future<TravelAudio>> _newList = [];
 
@@ -21,16 +22,26 @@ class TravelAudioList {
 
   final int total;
 
-  TravelAudioList.empty(this.total) : rawList = [];
+  TravelAudioList.empty()
+    : total = 0,
+      travelAudioMap = {};
 
   TravelAudioList(
-    this.rawList, {
+    this.travelAudioMap, {
     required this.total,
     required Future<TravelAudio> Function(travel_service.TravelAudio)
     newTravelAudio,
   }) {
-    for (final audio in rawList) {
-      _newList.add(newTravelAudio(audio));
+    // 依 key 排序
+    final sortedKeys = travelAudioMap.keys.toList()..sort();
+
+    for (final key in sortedKeys) {
+      final audios = travelAudioMap[key];
+      if (audios != null) {
+        for (final audio in audios) {
+          _newList.add(newTravelAudio(audio));
+        }
+      }
     }
   }
 }
@@ -42,17 +53,34 @@ extension ExTravelAudioList on TravelAudioList {
 
   /// 合併另一個 TravelAudioList
   TravelAudioList merge(
-    TravelAudioList other, {
-    required int page,
-    required Future<TravelAudio> Function(travel_service.TravelAudio)
-    newTravelAudio,
-  }) {
-    return TravelAudioList(total: other.total, [
-      ...rawList,
-      ...other.rawList,
-    ], newTravelAudio: newTravelAudio);
+      TravelAudioList other, {
+        required Future<TravelAudio> Function(travel_service.TravelAudio)
+        newTravelAudio,
+      }) {
+    // 先合併兩個 map
+    final mergedMap = <int, List<travel_service.TravelAudio>>{};
+
+    // 複製本身的資料
+    for (final entry in travelAudioMap.entries) {
+      mergedMap[entry.key] = [...entry.value];
+    }
+
+    // 合併另一個 list 的資料
+    for (final entry in other.travelAudioMap.entries) {
+      mergedMap.update(entry.key,
+            (existing) => [...existing, ...entry.value],
+        ifAbsent: () => [...entry.value],
+      );
+    }
+
+    return TravelAudioList(
+      mergedMap,
+      total: total,
+      newTravelAudio: newTravelAudio,
+    );
   }
 }
+
 
 @JsonSerializable(explicitToJson: true)
 class TravelAudio extends travel_service.TravelAudio {

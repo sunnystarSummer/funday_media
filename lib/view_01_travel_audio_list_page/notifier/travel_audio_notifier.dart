@@ -114,7 +114,7 @@ class TravelAudioNotifier extends AsyncNotifier<TravelAudioList> {
 
       // 重新建立清單（確保狀態更新）
       TravelAudioList newTravelAudioList = mainRepository.newTravelAudioList(
-        state.value!.rawList,
+        state.value!.travelAudioMap,
         total: state.value!.total,
       );
 
