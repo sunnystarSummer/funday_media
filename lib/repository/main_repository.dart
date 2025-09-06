@@ -21,7 +21,7 @@ abstract class AbsMainRepository {
   String get languageCode => _travelClient.languageCode;
 
   /// 目前快取的旅遊音檔清單
-  TravelAudioList _travelAudioList = travelAudioEmptyList;
+  TravelAudioList _travelAudioList = TravelAudioList.empty();
 
   bool _isValidOfTravelAudioOfMediaApi() {
     return (_travelAudioList.list.length < _travelAudioList.total);

@@ -6,12 +6,7 @@ import '../data_base/travel_audio_db.dart';
 
 part 'travel_audio_list.g.dart';
 
-TravelAudioList get travelAudioEmptyList {
-  return TravelAudioList.empty();
-}
-
 class TravelAudioList {
-
   final Map<int, List<travel_service.TravelAudio>> travelAudioMap;
 
   final List<Future<TravelAudio>> _newList = [];
@@ -22,9 +17,7 @@ class TravelAudioList {
 
   final int total;
 
-  TravelAudioList.empty()
-    : total = 0,
-      travelAudioMap = {};
+  TravelAudioList.empty() : total = 0, travelAudioMap = {};
 
   TravelAudioList(
     this.travelAudioMap, {
@@ -53,10 +46,10 @@ extension ExTravelAudioList on TravelAudioList {
 
   /// 合併另一個 TravelAudioList
   TravelAudioList merge(
-      TravelAudioList other, {
-        required Future<TravelAudio> Function(travel_service.TravelAudio)
-        newTravelAudio,
-      }) {
+    TravelAudioList other, {
+    required Future<TravelAudio> Function(travel_service.TravelAudio)
+    newTravelAudio,
+  }) {
     // 先合併兩個 map
     final mergedMap = <int, List<travel_service.TravelAudio>>{};
 
@@ -67,8 +60,9 @@ extension ExTravelAudioList on TravelAudioList {
 
     // 合併另一個 list 的資料
     for (final entry in other.travelAudioMap.entries) {
-      mergedMap.update(entry.key,
-            (existing) => [...existing, ...entry.value],
+      mergedMap.update(
+        entry.key,
+        (existing) => [...existing, ...entry.value],
         ifAbsent: () => [...entry.value],
       );
     }
@@ -80,7 +74,6 @@ extension ExTravelAudioList on TravelAudioList {
     );
   }
 }
-
 
 @JsonSerializable(explicitToJson: true)
 class TravelAudio extends travel_service.TravelAudio {

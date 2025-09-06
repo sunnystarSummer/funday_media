@@ -26,7 +26,7 @@ class TravelAudioNotifier extends AsyncNotifier<TravelAudioList> {
   /// 初始狀態（空清單）
   @override
   FutureOr<TravelAudioList> build() async {
-    return travelAudioEmptyList;
+    return TravelAudioList.empty();
   }
 
   /// 是否正在下載檔案（避免重複觸發）
