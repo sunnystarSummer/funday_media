@@ -106,7 +106,7 @@ class _TravelAudioListPageState extends ConsumerState<TravelAudioListPage> {
           ? travelAudioList.list.length + 1
           : 0,
       itemBuilder: (context, index) {
-        // ✅ Handle the extra footer slot first
+
         if (index == travelAudioList.list.length) {
           if (isEnd) {
             return const SizedBox(
@@ -128,10 +128,8 @@ class _TravelAudioListPageState extends ConsumerState<TravelAudioListPage> {
           }
         }
 
-        // Safe: index < list.length
         final value = travelAudioList.list[index];
 
-        //FIXME: 刷新畫面，導致Item位置偏移
         return FutureBuilder<TravelAudio>(
           future: value,
           builder: (context, snapshot) {
