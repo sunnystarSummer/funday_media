@@ -15,7 +15,19 @@ AbsMainRepository mainOfRepository() =>
 /// 提供取得「旅遊音檔」的方法，需傳入成功與失敗的回呼函式。
 abstract class AbsMainRepository {
   /// API 客戶端（必須存在）
-  final _travelClient = TravelClient();
+  //final _travelClient = TravelClient();
+
+  SupportLanguage _language = SupportLanguage.tw;
+
+  set language(SupportLanguage language) {
+    if (language.hashCode != _language.hashCode) {
+      _language = language;
+    }
+  }
+
+  TravelClient get _travelClient {
+    return TravelClient(languageCode: _language.code);
+  }
 
   /// 語系代碼
   String get languageCode => _travelClient.languageCode;
@@ -50,10 +62,9 @@ abstract class AbsMainRepository {
           // 處理成功結果 ----------------------------------
 
           // 將 API 回傳資料轉換成 TravelAudioList
-          final newList = newTravelAudioList(
-            {page: response.data ?? []},
-            total: response.total,
-          );
+          final newList = newTravelAudioList({
+            page: response.data ?? [],
+          }, total: response.total);
 
           // 第一頁：直接取代
           if (page == 1) {
