@@ -5,6 +5,7 @@ import 'package:synchronized/synchronized.dart';
 
 import '../../main.dart';
 import '../../repository/data/travel_audio_list.dart';
+import '../../service/client/travel_client.dart';
 
 /// 提供旅遊音檔資料的全域狀態管理（Riverpod Provider）
 ///
@@ -124,5 +125,13 @@ class TravelAudioNotifier extends AsyncNotifier<TravelAudioList> {
       return filePath;
     });
     return null;
+  }
+
+  Future<void> changeLanguage(SupportLanguage language) async {
+    mainRepository.language = language;
+
+    for (var index = 1; index <= _page; index++) {
+      await fetchTravelAudioOfMedia(page: index, error: (code, message) {});
+    }
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../main.dart';
 import '../repository/data/travel_audio_list.dart';
 
+import '../service/client/travel_client.dart';
 import '../ui/dialog_view.dart';
 import '../ui/loading_view.dart';
 import 'component/travel_audio_list.dart';
@@ -38,6 +39,21 @@ class _TravelAudioListPageState extends ConsumerState<TravelAudioListPage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
+        actions: [
+          PopupMenuButton<SupportLanguage>(
+            onSelected: (value) async {
+              await _travelAudioNotifier.changeLanguage(value);
+            },
+            itemBuilder: (BuildContext context) {
+              return SupportLanguage.values.map((e) {
+                return PopupMenuItem(
+                  value: e,
+                  child: Text(e.name),
+                );
+              }).toList();
+            },
+          ),
+        ],
       ),
       body: _listViewBuilderWithScrollNotification,
     );
@@ -106,7 +122,6 @@ class _TravelAudioListPageState extends ConsumerState<TravelAudioListPage> {
           ? travelAudioList.list.length + 1
           : 0,
       itemBuilder: (context, index) {
-
         if (index == travelAudioList.list.length) {
           if (isEnd) {
             return const SizedBox(
@@ -140,7 +155,8 @@ class _TravelAudioListPageState extends ConsumerState<TravelAudioListPage> {
               );
             }
             final audio = snapshot.data!;
-            final key = ValueKey("${audio.id}_${audio.title}");
+            //final key = ValueKey("${audio.id}_${audio.title}");
+            final key = ValueKey("${audio.id}");
 
             return isMobile
                 ? mobile.TravelAudioItemView(
