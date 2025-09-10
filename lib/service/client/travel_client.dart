@@ -28,6 +28,7 @@ final class TravelClient {
 
   final logger = Logger();
   late String _languageCode;
+
   String get languageCode => _languageCode;
 
   AbsTravelRestClient travelClient({required String url}) {
@@ -40,6 +41,7 @@ final class TravelClient {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           // 'Accept-Language': languageCode,
+          'Access-Control-Allow-Origin': '*',
         },
       ),
     );
